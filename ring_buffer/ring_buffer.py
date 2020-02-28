@@ -4,17 +4,14 @@ from doubly_linked_list import DoublyLinkedList
 class RingBuffer:
     def __init__(self, capacity):
         self.capacity = capacity
-        self.current = None
+        self.current = -1
         self.storage = DoublyLinkedList()
 
     def append(self, item):
         # track current position of tail
-        if self.current == None:
+        self.current += 1
+        if self.current >= self.capacity:
             self.current = 0
-        else:
-            self.current += 1
-            if self.current >= self.capacity:
-                self.current = 0
 
         # keep size at or below capacity
         if len(self.storage) >= self.capacity:
@@ -43,10 +40,26 @@ class RingBuffer:
 
 class ArrayRingBuffer:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.current = -1
+        self.storage = [None for i in range(capacity)]
 
     def append(self, item):
-        pass
+        self.current += 1
+        if self.current >= self.capacity:
+            self.current = 0
+
+        self.storage[self.current] = item
 
     def get(self):
-        pass
+        return [i for i in self.storage if i != None]
+    
+    # advantage:
+    # - less code
+    # - no need to add/remove items to keep to capacity
+    # - get() is more runtime efficient (O(n) vs O(n^2))
+    # disadvantage: 
+    # - requires continuous memory
+    # special case:
+    # - because capacity is constant, there is no issue
+    #   with appending/inserting beyond current memory block
