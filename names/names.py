@@ -53,22 +53,26 @@ class BinarySearchTree:
         return False
 
 def append_duplicates_fast():
-    # runtime complexity O(n + n*log n) ~= O(n*log n)
+    # runtime complexity O(m + n*log n) ~= O(n*log n)
     names_2_tree = BinarySearchTree()
-    for name_2 in names_2: # n
+    for name_2 in names_2: # m
         names_2_tree.insert(name_2)
     for name_1 in names_1: # n
         if names_2_tree.contains(name_1): # log n
             duplicates.append(name_1)
 
+# ---------- Stretch Goal -----------
+# Python has built-in tools that allow for a very efficient approach to this problem
+# What's the best time you can accomplish?  There are no restrictions on techniques or data
+# structures, but you may not import any additional libraries that you did not write yourself.
+
+def append_duplicates_stretch():
+    duplicates.extend(set(names_1).intersection(names_2))
+
 # append_duplicates_slow()
-append_duplicates_fast()
+# append_duplicates_fast()
+append_duplicates_stretch()
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
-
-# ---------- Stretch Goal -----------
-# Python has built-in tools that allow for a very efficient approach to this problem
-# What's the best time you can accomplish?  Thare are no restrictions on techniques or data
-# structures, but you may not import any additional libraries that you did not write yourself.
